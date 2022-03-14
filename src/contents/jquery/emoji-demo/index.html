@@ -122,14 +122,14 @@
                     for(let k = 0; k < kind.list.length; k++){
                         let emojiList = kind.list[k]
                         let address = 'https://www.webfx.com/wp-content/themes/fx/assets/img/tools/emoji-cheat-sheet/graphics/emojis/'+ emojiList +".png"
-                        $(".emoji_wrap").append("<li><a data-emoji_code='#em1_5#' data-index='4' title=\"" + index + "\"><img src= \"" + address +"\"  class='emoji_item' width='24'></a></li>");
+                        $(".emoji_wrap").append("<li><a data-emoji_code='#em1_5#' data-index='4' title=\"" + index + "\"><img src= \"" + address +"\"  class= \"" + emojiList +' emoji_item' + "\" width='24'></a></li>");
                     }
                 }
             }else if(index === 'twemoji'){
                 for(let item = 0; item < emojiIndex.length; item++){
                     let twenoji = emojiIndex[item]
                     let address = 'http://twemoji.maxcdn.com/36x36/'+ twenoji +".png"
-                    $(".twemoji_wrap").append("<li><a data-emoji_code='#em1_5#' data-index='4' title=\"" + twenoji  + "\"><img src= \"" + address +"\"  class='emoji_item' width='24'></a></li>");
+                    $(".twemoji_wrap").append("<li><a data-emoji_code='#em1_5#' data-index='4' title=\"" + twenoji  + "\"><img src= \"" + address +"\"  class= \"" + twenoji +' emoji_item' + "\" width='24'></a></li>");
                 }
             }else{
                 // for(let item = 0; item < emojiIndex.length; item++){
