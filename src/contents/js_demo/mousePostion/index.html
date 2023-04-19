@@ -1,0 +1,127 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>事件冒泡、事件捕获、事件委托</title>
+    <!--<link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">-->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        .box {
+            width:800px;
+            height:600px;
+            background-color: #dcdcdc;
+            margin: 0 auto;
+            display: block;
+            position: absolute;
+            top:50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+        }
+        .container{
+            width:100%;
+            height:100%;
+            position: relative;
+        }
+        video, canvas{
+            width:100%;
+            height:100%;
+            position: absolute;
+        }
+        .showPosition{
+            background-color: gray;
+            color: white;
+            position: absolute;
+            width: 200px;
+            height:50px;
+            z-index: 999;
+            cursor: pointer;
+            display:none;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+<div class="box" onclick="boxClick()" onmouseleave="boxClick()">
+    <div class="container" onclick="containerClick()">
+        <video  class="localVideo" onclick="videoClick()"></video>
+        <canvas class="canvas" onclick="canvasClick()"></canvas>
+        <div class="showPosition"></div>
+    </div>
+</div>
+<script>
+    let showPosition = document.getElementsByClassName("showPosition")[0]
+    let canvas = document.getElementsByClassName("canvas")[0]
+    canvas.onmousemove = function(event){
+        event = event || window.event;
+        stopDefault(event)
+        stopBubble(event)
+        showPosition.style.left = event.offsetX + 'px'
+        showPosition.style.top =  event.offsetY +'px'
+        showPosition.textContent = `x:${event.offsetX},y:${event.offsetY}`
+        showPosition.style.display = "block";
+    }
+    canvas.onmouseleave = function(e){
+        e = e || window.event;
+        stopDefault(e)
+        stopBubble(e)
+        console.warn("canvas leave leave")
+        showPosition.style.display = "none";
+    }
+
+    function boxClick(e){
+        e = e || window.event;
+        stopDefault(e)
+        stopBubble(e)
+        console.warn("box box box  最外层盒子")
+    }
+
+    function containerClick(e){
+        e = e || window.event;
+        stopDefault(e)
+        stopBubble(e)
+        console.warn("container 中间盒子")
+    }
+
+    function videoClick(e){
+        e = e || window.event;
+        stopDefault(e)
+        stopBubble(e)
+        console.warn("video 最里面的盒子")
+    }
+
+    function canvasClick(e){
+        e = e || window.event;
+        console.warn("e:",e)
+        stopDefault(e)
+        stopBubble(e)
+        console.warn("canvas 最里面的盒子")
+    }
+
+    // 阻止冒泡行为
+    function stopBubble(e) {             //如果提供了事件对象，则这是一个非IE浏览器
+        if ( e && e.stopPropagation ) {   //因此它支持W3C的stopPropagation()方法
+            e.stopPropagation();
+        } else {                          //否则，我们需要使用IE的方式来取消事件冒泡
+            window.event.cancelBubble = true;
+        }
+    }
+
+    // 阻止浏览器的默认行为
+    function stopDefault( e ) {
+        if ( e && e.preventDefault ) {   //阻止默认浏览器动作(W3C)
+            e.preventDefault();
+        }else {                          //IE中阻止函数器默认动作的方式
+            window.event.returnValue = false;
+            return false;
+        }
+    }
+</script>
+
+</body>
+</html>
